@@ -14,6 +14,10 @@ variable "private_key_path" {
 variable "private_key_password" {
   default = ""
 }
+variable "private_key" {
+  default = ""
+  sensitive = true
+}
 variable "home_region" {
   type        = string
   description = "The tenancy home region."
