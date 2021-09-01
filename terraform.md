@@ -1,46 +1,24 @@
-## How the Terraform Code is Organized 
-The Terraform code consists of a single root module configuration defined within the *config* folder along with a few children modules within the *modules* folder.
+## Landing Zone Modules
+The Landing Zone terraform is made of two root modules and some children modules. The root modules are under the *config* and *pre-config* folders, while the children modules are under the *modules* folder. Both *config* and *pre-config* use the children modules for resource creation.
 
-Within the config folder, the Terraform files are named after the use cases they implement as described in CIS OCI Security Foundation Benchmark document. For instance, iam_1.1.tf implements use case 1.1 in the IAM sectiom, while mon_3.5.tf implements use case 3.5 in the Monitoring section. .tf files with no numbering scheme are either Terraform suggested names for Terraform constructs (provider.tf, variables.tf, locals.tf, outputs.tf) or use cases supporting files (iam_compartments.tf, net_vcn.tf).
+The *config* module is responsible for provisioning the Landing Zone resources. It can be executed by a tenancy administrator or a non tenancy administrator. When executed by a non tenancy administrator, the *pre-config* module must be previously executed by a tenancy administrator to create Landing Zone required resources in the root compartment, like compartments, policies and groups. If the *config* module is being executed by a tenancy administrator, the *pre-config* module does not need to be executed, as the *config* module will be able to create all required resources in the root compartment.
 
-**Note**: The code has been written and tested with Terraform version 0.13.5 and OCI provider version 4.2.0.
+Within the config folder, the Terraform files are named after the use cases they implement as described in CIS OCI Security Foundation Benchmark document. Each file prefix implements/supports use cases in the corresponding section in that document.
 
-## Input Variables
-Input variables used in the configuration are all defined in config/variables.tf:
+The variables in each root module are described in [Config Module Input Variables](VARIABLES.md#config_input_variables) and [Pre-Config Module Input Variables](VARIABLES.md#pre_config_input_variables).
 
-Variable Name | Description | Required | Default Value
---------------|-------------|----------|--------------
-**tenancy_ocid** | the OCI tenancy id where this configuration will be executed. This information can be obtained in OCI Console | Yes | None
-**user_ocid** | the OCI user id that will execute this configuration. This information can be obtained in OCI Console. The user must have the necessary privileges to provision the resources | Yes | ""
-**fingerprint** | the user's public key fingerprint. This information can be obtained in OCI Console | Yes | ""
-**private_key_path** | the local path to the user private key | Yes | ""
-**private_key_password** | the private key password, if any | No | ""
-**region** \* | the tenancy region identifier where the Terraform should provision the resources | Yes | None
-**service_label** | a label used as a prefix for naming resources | Yes | None
-**vcn_cidr** | the VCN CIDR block | Yes | "10.0.0.0/16"
-**public_subnet_cidr** | the public subnet CIDR block | Yes | "10.0.1.0/24"
-**private_subnet_app_cidr** | the App private subnet CIDR block | Yes | "10.0.2.0/24"
-**private_subnet_db_cidr** | the DB private subnet CIDR block | Yes | "10.0.3.0/24"
-**public_src_bastion_cidr** | the external CIDR block that is allowed to ingress into the bastions servers in the public subnet | Yes | None
-**public_src_lbr_cidr** | the external CIDR block that is allowed to ingress into the load balancer in the public subnet | Yes | "0.0.0.0/0"
-**is_vcn_onprem_connected** | whether the VCN is connected to on-premises, in which case a DRG is created and attached to the VCN | Yes | false
-**onprem_cidr** | the on-premises CIDR block. Only used if is_vcn_onprem_connected == true | No | "0.0.0.0/0"
-**network_admin_email_endpoint** | an email to receive notifications for network related events | Yes | None
-**security_admin_email_endpoint** | an email to receive notifications for security related events | Yes | None
-**cloud_guard_configuration_status** | whether Cloud Guard is enabled or not | Yes | ENABLED
-
-\* For a list of available regions, please see https://docs.cloud.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm	
+**Note**: The code has been written and tested with Terraform version 0.13.5 and OCI provider version 4.23.0.
 
 ## How to Execute the Code Using Terraform CLI
-Within the *config* folder, provide variable values in the existing *quickstart-input.tfvars* file.
+Within the root module folder (*config* or *pre-config*), provide variable values in the existing *quickstart-input.tfvars* file.
 
-Next, within the *config* folder, execute:
+Next, execute:
 
 	terraform init
 	terraform plan -var-file="quickstart-input.tfvars" -out plan.out
 	terraform apply plan.out
 
-Alternatively, rename *quickstart-input.tfvars* file to *terraform.tfvars* and execute:	
+Alternatively, after providing the variable values in *quickstart-input.tfvars*, rename it to *terraform.tfvars* and execute:	
 
 	terraform init
 	terraform plan -out plan.out
@@ -73,9 +51,9 @@ Using OCI Console, navigate to Resource Manager service page and create a stack 
 
 ![Folder Stack](images/ZipStack_2.png)
 
-Following the Stack creation wizard, the subsequent step prompts for variables values. Please see the **Input Variables** section above for the variables description. 
+Following the Stack creation wizard, the subsequent step prompts for variables values. Please see the [Config Module Input Variables](VARIABLES.md#config_input_variables) for the variables description. 
 
-Some variables, like *VCN CIDR Block* for instance, are defaulted in the configuration's variables.tf file and must be reviewed and reassigned values as needed.
+Some variables, as the one highlighted in the screen capture below, are defaulted in the configuration's variables.tf file and should be reviewed and reassigned values as needed.
 
 ![Folder Stack](images/ZipStack_3.png)
 
@@ -103,54 +81,19 @@ Next, create a stack based on a source code control system. Using OCI Console, i
 	- For the **Working Directory**, select the 'config' folder.	 
 3. In **Name**, give the stack a name or accept the default.
 4. In **Create in Compartment** dropdown, select the compartment to store the stack.
-5. In **Terraform Version** dropdown, **make sure to select 0.13.x**.
+5. In **Terraform Version** dropdown, **make sure to select 0.13.x at least. Lower Terraform versions are not supported**.
 
 ![GitLab Stack](images/GitLabStack.png)
 
 Once the stack is created, navigate to the stack page and use the **Terraform Actions** button to plan/apply/destroy your configuration.
 
 ## How to Customize the Terraform Configuration
-The Terraform code has a single configuration root module and a few modules that actually perform the provisioning. We encourage any customization to follow this pattern as it enables consistent code reuse.
+The Terraform code has two root modules and various children modules. The root modules are *pre-config* and *config* folders. They make calls to the children modules for resource creation. The children modules are defined under the *modules* folder. As a rule of thumb, the children modules iterate through maps of objects created by the root modules. We encourage customizations to follow this pattern as it enables consistent code reuse.
 
-For bringing new resources into the Terraform configuration, like compartments or VCNs, you can simply reuse the existing modules and add extra module calls similar to the existing ones in the root module. Most modules accept a map of resource objects that are usually keyed by the resource name. 
+The file names in the root modules are self-explanatory. They are prefixed with a reference to the corresponding section name in CIS Benchmark document, followed by the OCI service or resource that they implement. For instance, iam_compartments.tf references the IAM section and implements compartments, net_vcn.tf references to the Networking section and implements VCN. mon_notifications.tf references the Monitoring section and implements notifications.
 
-For adding extra objects to an existing container object (like adding subnets to a VCN), simply add the extra objects to the existing map. For instance, looking at the net_vcn.tf file, we have:
+The root modules also have a locals.tf, where most of local variables are defined (note that some are defined directly in the files that use them). Local variables are used for processing input variables and creating the required inputs for the children modules. For example, many resource names and object maps are created as local variables. 
 
-```
-  module "cis_vcn" {
-  	source               = "../modules/network/vcn"
-  	compartment_id       = module.cis_compartments.compartments[local.network_compartment_name].id
-  	...
-  	is_create_drg        = tobool(var.is_vcn_onprem_connected)
+Small customizations, like changing resource names, changing a network security group or even adding a new subnet to a VCN can be achieved by changing the local variables.
 
-  	subnets = {
-    (local.public_subnet_name) = {
-      compartment_id    = null
-      ...
-      cidr              = var.public_subnet_cidr
-      ...
-      dns_label         = "public"
-      private           = false
-      ...
-      route_table_id    = module.cis_vcn.route_tables[local.public_subnet_route_table_name].id
-      security_list_ids = [module.cis_security_lists.security_lists[local.public_subnet_security_list_name].id]
-    }, 
-    (local.private_subnet_app_name) = {
-      compartment_id    = null
-      ...
-      cidr              = var.private_subnet_app_cidr
-      ...
-      dns_label         = "appsubnet"
-      private           = true
-      ...
-      route_table_id    = module.cis_vcn.route_tables[local.private_subnet_app_route_table_name].id
-      security_list_ids = [module.cis_security_lists.security_lists[local.private_subnet_app_security_list_name].id]
-	  ...
-```
-In this code excerpt, the *subnets* variable is a map of subnet objects. Adding a new subnet to the existing VCN is as easy as adding a new subnet object to the *subnets* map. Make sure to provide the new subnet a route table and security list. Use the available code as an example. For adding a new VCN altogether, simply provide a new tf file with contents similar to net_vcn.tf.
-
-## Known Facts
-### Destroying Resources
-- By design, vaults and keys are not destroyed immediately. They have a delayed delete of 30 days.
-- By design, compartments are not destroyed immediately. 
-- Tag namespaces may fail to delete on the first destroy.  Run destroy again to remove.
+Large customizations, like changing the compartments structure, are more involved and will likely require new logic in the root module. In these cases, one suggestion is creating a brand new root module while reusing the existing children modules.
