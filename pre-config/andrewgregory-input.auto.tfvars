@@ -7,8 +7,7 @@
 ### Basic variables
 tenancy_ocid         = "ocid1.tenancy.oc1..aaaaaaaaapgoe253qc6k72rvb2klqiohq2umt2n52xq4tnbykuxo5vhhpc5q"
 user_ocid            = "ocid1.user.oc1..aaaaaaaatic3jk67dvghbd2eeco2ftekt3ru6sauhsojzomfpsbxc4bkpa6q"
-fingerprint          = ""5b:0a:43:58:38:3c:47:e7:77:e9:9e:4b:78:46:cb:54
-private_key     = ""
+fingerprint          = "5b:0a:43:58:38:3c:47:e7:77:e9:9e:4b:78:46:cb:54"
 
 ### Environment variables
 home_region   = "us-ashburn-1"
