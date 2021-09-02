@@ -7,6 +7,9 @@ module "lz_vault" {
     compartment_id    = module.lz_compartments.compartments[local.security_compartment_name].id
     vault_name        = local.vault_name
     vault_type        = local.vault_type
+
+    # Really no vault today
+    count = 0
 }
 
 

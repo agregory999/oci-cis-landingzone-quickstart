@@ -6,12 +6,12 @@
 
 ### Basic variables
 tenancy_ocid         = "ocid1.tenancy.oc1..aaaaaaaaapgoe253qc6k72rvb2klqiohq2umt2n52xq4tnbykuxo5vhhpc5q"
-user_ocid            = "ocid1.user.oc1..aaaaaaaatic3jk67dvghbd2eeco2ftekt3ru6sauhsojzomfpsbxc4bkpa6q"
+user_ocid            = ""
 fingerprint          = "5b:0a:43:58:38:3c:47:e7:77:e9:9e:4b:78:46:cb:54"
 
 ### Environment variables
 region        = "us-ashburn-1"
-service_label = "CIS20TF-LZ1"
+#service_label = "CIS20TF-LZ1"
 use_enclosing_compartment               = true
 existing_enclosing_compartment_ocid     = "ocid1.compartment.oc1..aaaaaaaabbyvotmbygyhpnpatgsoziw2eosv4gvcsn4wfy67ncermnsoxyeq" # Compartment OCID where Landing Zone compartments are created.
 policies_in_root_compartment            = "USE"
