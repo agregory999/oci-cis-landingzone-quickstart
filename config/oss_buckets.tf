@@ -17,7 +17,7 @@ module "lz_buckets" {
 
 ### We've observed that policies, even when created before the bucket, may take some time to be available for consumption. Hence the delay introduced here.
 resource "null_resource" "slow_down_oss" {
-   depends_on = [ module.lz_keys_policies ]
+#   depends_on = [ module.lz_keys_policies ]
    provisioner "local-exec" {
      command = "sleep ${local.delay_in_secs}" # Wait for policies to be available.
    }
