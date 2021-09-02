@@ -19,8 +19,9 @@ variable "fingerprint" {
 variable "private_key_path" {
   default = ""
 }
-variable "private_key_password" {
+variable "private_key" {
   default = ""
+  sensitive = true
 }
 variable "region" {
   validation {
