@@ -43,8 +43,8 @@ existing_announcement_reader_group_name = "CIS20TF-LZ1-announcement-reader-group
 # onprem_cidrs             = ["<cidr_1>","<cidr_2>","...","<cidr_n>"] # list of customer owned CIDRs allowed to connect to Landing Zone over a private channel.
 
 ### Notifications variables
-network_admin_email_endpoints  = ["<email_1>","<email_2>",...,"<email_n>"] # list of email addresses for all network related notifications.
-security_admin_email_endpoints = ["<email_1>","<email_2>",...,"<email_n>"] # list of email addresses for all security related notifications.
+#network_admin_email_endpoints  = ["<email_1>","<email_2>",...,"<email_n>"] # list of email addresses for all network related notifications.
+#security_admin_email_endpoints = ["<email_1>","<email_2>",...,"<email_n>"] # list of email addresses for all security related notifications.
 
 ##### Cloud Guard variables
 # cloud_guard_configuration_status = "ENABLED"
