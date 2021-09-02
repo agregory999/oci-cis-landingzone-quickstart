@@ -7,7 +7,7 @@ module "lz_buckets" {
     source       = "../modules/object-storage/bucket"
     region       = var.region
     tenancy_ocid = var.tenancy_ocid
-    kms_key_id   = module.lz_keys.keys[local.oss_key_name].id
+#    kms_key_id   = module.lz_keys.keys[local.oss_key_name].id
     buckets      = { 
         "${var.service_label}-appdev-bucket" = {
             compartment_id = module.lz_compartments.compartments[local.appdev_compartment_name].id
