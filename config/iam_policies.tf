@@ -292,6 +292,7 @@ locals {
   storage_admin_grants = [
         # Grants in appdev compartment
         # Object Storage
+        "allow service objectstorage-us-ashburn-1 to manage object-family in compartment ${local.appdev_compartment.name}",
         "allow group ${local.storage_admin_group_name} to read bucket in compartment ${local.appdev_compartment.name}",
         "allow group ${local.storage_admin_group_name} to inspect object in compartment ${local.appdev_compartment.name}",
         "allow group ${local.storage_admin_group_name} to manage object-family in compartment ${local.appdev_compartment.name} where any {request.permission = 'OBJECT_DELETE', request.permission = 'BUCKET_DELETE'}",

@@ -33,7 +33,7 @@ locals {
   default_tags = { # the map keys are meant to be the tag names.
     (local.createdby_tag_name) = {
       tag_description         = "CIS Landing Zone tag that identifies who created the resource."
-      tag_is_cost_tracking    = true
+      tag_is_cost_tracking    = false
       tag_is_retired          = false
       make_tag_default        = true
       tag_default_value       = "$${iam.principal.name}"
@@ -67,7 +67,8 @@ module "lz_tags" {
 }
 
 module "lz_arch_center_tag" {
-  count = !var.extend_landing_zone_to_new_region ? 1 : 0
+  #count = !var.extend_landing_zone_to_new_region ? 1 : 0
+  count = 0
   source        = "../modules/monitoring/tags-arch-center"
   providers     = { oci = oci.home }
   tenancy_ocid  = local.tag_namespace_compartment_id

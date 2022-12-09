@@ -61,7 +61,8 @@ locals {
       topic_id            = local.security_topic.id != null ? local.security_topic.id : module.lz_home_region_topics.topics[local.security_topic.key].id
       defined_tags        = local.notifications_defined_tags
       freeform_tags       = local.notifications_freeform_tags
-    } if var.extend_landing_zone_to_new_region == false
+    #} if var.extend_landing_zone_to_new_region == false
+    } if false
    },
    {for i in [1] : (local.notify_on_cloudguard_events_rule.key) => {
       compartment_id      = var.tenancy_ocid
@@ -82,7 +83,7 @@ locals {
   )
   regional_notifications =  merge (
     {for i in [1] : (local.notify_on_network_changes_rule.key) => {
-      compartment_id      = var.tenancy_ocid
+      compartment_id      = local.network_topic.cmp_id
       description         = "Landing Zone events rule to detect when networking resources are created, updated or deleted."
       is_enabled          = true
       condition           = <<EOT
