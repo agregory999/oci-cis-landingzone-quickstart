@@ -25,6 +25,7 @@ locals {
 #---------------------------------------------------------------------------
 module "lz_vault" {
   source = "../modules/security/vaults"
+  depends_on = [null_resource.wait_on_services_policy]
   count  = local.enable_vault ? 1 : 0
   compartment_id = local.security_compartment_id
   name           = local.vault_name
@@ -86,8 +87,7 @@ locals {
   vault_defined_tags = local.custom_vault_defined_tags != null ? local.custom_vault_defined_tags : local.default_vault_defined_tags
   vault_freeform_tags = local.custom_vault_freeform_tags != null ? merge(local.custom_vault_freeform_tags, local.default_vault_freeform_tags) : local.default_vault_freeform_tags
   
-  enable_vault = (var.enable_oss_bucket && var.existing_bucket_vault_id == null && var.cis_level == "2") || (
-                  var.enable_service_connector && var.service_connector_target_kind == "objectstorage" && var.existing_service_connector_bucket_vault_id == null && var.cis_level == "2")
+  enable_vault = var.cis_level == "2" ? true : false                
 
   #-- Keys
   default_appdev_bucket_key_name = "${var.service_label}-oss-key"

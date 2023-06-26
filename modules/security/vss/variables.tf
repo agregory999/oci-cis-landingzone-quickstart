@@ -11,12 +11,6 @@ variable "compartment_id" {
   type = string
 }
 
-variable "manage_iam_policies" {
-  description = "Whether the module should manage VSS IAM policies. Since these policies are created at a global level and are available across regions, it might be they are already present."
-  type = bool
-  default = true
-}
-
 variable "vss_recipe_name" {
   description = "The recipe name. Use it to override the default one, that is either <name-prefix>-default-scan-recipe or default-scan-recipe."
   type = string
@@ -84,12 +78,6 @@ variable "vss_targets" {
     target_compartment_id = string
     target_compartment_name = string
   }))
-}
-
-variable "vss_policy_name" {
-  description = "The VSS policy name. Use it to override the default policy name, which is either <name-prefix>-vss-policy or vss-policy."
-  type = string
-  default = null
 }
 
 variable "defined_tags" {

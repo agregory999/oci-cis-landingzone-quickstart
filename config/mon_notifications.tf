@@ -115,7 +115,7 @@ locals {
           "com.oraclecloud.virtualnetwork.updateinternetgateway",
           "com.oraclecloud.virtualnetwork.changeinternetgatewaycompartment",
           "com.oraclecloud.virtualnetwork.createlocalpeeringgateway",
-          "com.oraclecloud.virtualnetwork.deletelocalpeeringgateway",
+          "com.oraclecloud.virtualnetwork.deletelocalpeeringgateway.end",
           "com.oraclecloud.virtualnetwork.updatelocalpeeringgateway",
           "com.oraclecloud.virtualnetwork.changelocalpeeringgatewaycompartment",
           "com.oraclecloud.natgateway.createnatgateway",
@@ -123,7 +123,6 @@ locals {
           "com.oraclecloud.natgateway.updatenatgateway",
           "com.oraclecloud.natgateway.changenatgatewaycompartment",
           "com.oraclecloud.servicegateway.createservicegateway",
-          "com.oraclecloud.servicegateway.deleteservicegateway.begin",
           "com.oraclecloud.servicegateway.deleteservicegateway.end",
           "com.oraclecloud.servicegateway.attachserviceid",
           "com.oraclecloud.servicegateway.detachserviceid",
@@ -178,11 +177,7 @@ locals {
       compartment_id      = local.exainfra_topic.cmp_id
       description         = "Landing Zone events rule to detect Exadata infrastructure events."
       is_enabled          = var.create_events_as_enabled
-      condition           = <<EOT
-            {"eventType": 
-            [${local.exainfra_events}]
-            }
-            EOT
+      condition           = jsonencode({"eventType": local.exainfra_events})
       actions_action_type = "ONS"
       actions_is_enabled  = true
       actions_description = "Sends notification via ONS"

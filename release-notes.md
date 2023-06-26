@@ -1,3 +1,165 @@
+#   June 20, 2023 Release Notes - 2.5.11
+1. [Performance update to the CIS Compliance Script](#2-5-11-script-performance)
+1. [Summary Data update to the CIS Compliance Script](#2-5-11-script-updates)
+1. [Fixes to the CIS Compliance Script](#2-5-11-script-fixes)
+
+## <a name="2-5-11-script-performance">Performance update to the CIS Compliance Script</a>
+Migrate the querying of resources to Resource Search (a module within Oracle’s API).  By using Resource Search, compartment iterations for listing items are ignored.  For items that require more detailed information than Resource Search returns, only those compartments are queried.  This migration reduces script execution time by 8 times.
+
+## <a name="#2-5-11-script-updates">Updates to the CIS Compliance Script</a>
+The CIS Summary report CSV adds two new columns **Compliant Items**, which represents the number of resources that are aligned to that recommendation, and **Total** which is the total number of that resource in tenancy. The **Total** column is also in the screen output.
+
+## <a name="#2-5-11-script-fixes">Fixes to the CIS Compliance Script</a>
+Fixes
+- Updated the CIS checks 2.1, 2,2, 2.3, and 2.4 to detect Security Lists and Networks Security Groups that allow egress access to ports 22 or 3389 via allowing all protocols, all ports, or using port ranges.
+- Updated CIS Check 2.5 to only look at Default Security Lists.
+
+
+#   May 12, 2023 Release Notes - 2.5.10
+1. [Support for Security Tokens in the CIS Compliance Script](#2-5-10-script-updates)
+1. [Terraform Template Updates](#2-5-9-tf-updates)
+
+## <a name="2-5-10-script-updates">Support for Security Tokens in the CIS Compliance Script</a>
+New:
+- Added support of Security Tokens for script authentication courtesy of Dave Knot ([dns-prefetch](https://github.com/dns-prefetch)).  For usage example, go to the [compliance-script.md](https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/blob/main/compliance-script.md) and review the **Executing on a local machine via Security Token (oci session authenticate)** example. For more information on security tokens: [https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/clitoken.htm](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/clitoken.htm)
+
+## <a name="2-5-10-tf-updates">Terraform Template Updates</a>
+Fixes:
+- Security rule added for ICMP in Exadata CS security lists, allowing for the initiation of ICMP requests to hosts in the VCN. Changes in [net_exacs_vcns.tf](./config/net_exacs_vcns.tf).
+- VSS targets are now created when the Landing Zone is extended to a new region. Changes in [vss.tf](./config/vss.tf).
+
+#   April 26, 2023 Release Notes - 2.5.9
+1. [Terraform Template Updates](#2-5-9-tf-updates)
+
+## <a name="2-5-9-tf-updates">Terraform Template Updates</a>
+Updates:
+- Security Zone is enabled only if an enclosing compartment is used. Changes in [security_zones.tf](./config/security_zones.tf).
+- Network event types updated for local peering gateway and service gateway: only event types ending with ".end" are captured. Changes in [mon_notifications.tf](./config/mon_notifications.tf).
+
+#   April 17, 2023 Release Notes - 2.5.8
+1. [Compliance Checking Script Updates](#2-5-8-script-updates)
+1. [Terraform Template Updates](#2-5-8-tf-updates)
+
+## <a name="2-5-8-script-updates">CIS Compliance Script Updates</a>
+Updates:
+- Updated CIS rule 1.7 to exclude OCI IAM Local Users that are service accounts.  A service account is a OCI IAM Local user that does not have *Local Password* as a *User Capabilities.*  
+- Support validated on OCI SDK 2.97.0.
+Fixes:
+- Improved error handling for Event Rules with no conditions.
+
+## <a name="2-5-8-tf-updates">Terraform Template Updates</a>
+- Compartment level service policies no longer created when extending Landing Zone to new region.
+- VSS and Vault resources now dependent on service policies. 
+
+#   April 04, 2023 Release Notes - 2.5.7
+1. [Exadata Events Fix](#2-5-7-exadata-events-fix)
+1. [Compliance Checking Script Updates](#2-5-7-script-updates)
+
+## <a name="2-5-7-exadata-events-fix">Exadata Events Fix</a>
+- Exadata events handled with jsonencode function in [mon_notifications.tf](./config/mon_notifications.tf).
+
+## <a name="2-5-7-script-updates">CIS Compliance Script Updates</a>
+Updates:
+- Added optionality to the NSG deep_link incase the link is less than 254 characters.
+- Updated Release version and date.
+
+Fixes:
+- Fixed console output formatting for CIS Summary report.
+
+
+
+#   March 24, 2023 Release Notes - 2.5.6
+1. [Compliance Checking Script Updates](#2-5-6-script-updates)
+
+## <a name="2-5-6-script-updates">CIS Compliance Script Updates</a>
+Updates:
+- Added egress rules to Security Lists and Network Security Groups.
+- Added DRG Upgrade status as *Upgrade_status* to the `raw_data_network_drgs.csv` file.
+
+Fixes:
+- For CIS Recommendations 1.5 and 1.6 now show *Not Applicable* instead of *Yes* or *No* as this is not yet checked by the script.
+- Removed filenames for findings with zero findings from the `cis_summary_report.csv` and `cis_html_summary_report.html` reports.
+
+#   March 24, 2023 Release Notes - 2.5.6
+1. [Compliance Checking Script Updates](#2-5-6-script-updates)
+
+## <a name="2-5-6-script-updates">CIS Compliance Script Updates</a>
+Updates:
+- Added egress rules to Security Lists and Network Security Groups.
+- Added DRG Upgrade status as *Upgrade_status* to the `raw_data_network_drgs.csv` file.
+
+Fixes:
+- For CIS Recommendations 1.5 and 1.6 now show *Not Applicable* instead of *Yes* or *No* as this is not yet checked by the script.
+- Removed filenames for findings with zero findings from the `cis_summary_report.csv` and `cis_html_summary_report.html` reports.
+
+#   March 2, 2023 Release Notes - 2.5.5
+1. [OCI IAM Policy Fix for Database Admin Group](#2-5-5-adb-policy-fix)
+1. [OCI IAM Service Policy Update](#2-5-5-oci-iam-service-policy)
+1. [Enhanced HTML CIS Summary Report](#2-5-5-html-cis-summary)
+1. [Compliance Checking Script Updates](#2-5-5-script-updates)
+
+
+## <a name="2-5-5-adb-policy-fix">OCI IAM Policy Fix for Database Admin Group</a>
+Updated OCI IAM policies attached to the Database Admin Group to support deploying ADBs in private subnets. Policy is based on documentation [here](https://docs.oracle.com/en-us/iaas/autonomous-database-shared/doc/iam-private-endpoint-configure-policies.html).
+
+## <a name="2-5-5-oci-iam-service-policy">OCI IAM Service Policy Update</a>
+Added an OCI IAM policy to allow OCI services File Storage Service, Object Storage Service, Oracle Kubernetes Engine, Streaming and Block Storage to encrypt data using keys in the OCI Vault in the Security Compartment. 
+
+## <a name="2-5-5-html-cis-summary">Enhanced HTML CIS Summary Report</a>
+The HTML CIS Summary report from the CIS compliance checking script has a significantly updated look and feel.
+
+## <a name="2-5-5-script-updates">CIS Compliance Script Updates</a>
+- The CIS compliance checking script has added user capabilities to OCI IAM user collection.  These attributes are only available in the `raw_data_identity_users.csv` file.
+- Enhanced exception handling for Oracle Best Practice checks.
+
+
+#   February 10, 2023 Release Notes - 2.5.4
+1. [Improved CIS 3.7 and 3.13 Checks](#2-5-4-cis-logic)
+
+## <a name="2-5-4-cis-logic">Improved CIS 3.7 and 3.13 Checks</a>
+The CIS Compliance checking script checks for Logging and Monitoring 3.7: *Ensure a notification is configured for IAM policy changes* and Logging and Monitoring 3.13: *Ensure a notification is configured for changes to route tables* has been improved to reduce false positives.
+
+#   February 1, 2023 Release Notes - 2.5.3
+1. [HTML CIS Summary Report](#2-5-3-script-html)
+1. [Resource Deep Links in CSV](#2-5-3-deep-link)
+1. [Improved CIS IAM 1.1 Check](#2-5-3-cis-logic)
+
+## <a name="2-5-3-script-html">HTML CIS Summary Report</a>
+The CIS Compliance checking script now outputs an HTML summary report.  The summary report includes additional information from the [CIS OCI Benchmark v1.2](https://www.cisecurity.org/benchmark/oracle_cloud) plus a link to the finding's CSV file.
+
+## <a name="2-5-3-deep-link">Resource Deep Links in CSV</a>
+The CIS Compliance checking script CSV reports have a new field `deep_link` which contains a clickable link to the resource in the OCI Console. 
+
+## <a name="2-5-3-cis-logic">Improved CIS IAM 1.1 Check</a>
+The CIS Compliance checking script check for Identity and Access Management 1.1: *Ensure service level admins are created to manage resources of particular service* has been improved to reduce false positives. 
+
+#  January 26, 2023 Release Notes - 2.5.2
+1. [Service Connector Hub Improvements](#2-5-2-sch-improvements)
+1. [CIS Level Setting Updates](#2-5-2-cis-level)
+
+## <a name="2-5-2-sch-improvements">Service Connector Hub Improvements</a>
+Service Connector Hub functionality has been improved with the following:
+- Audit logs from all tenancy compartments are now captured.
+- Support for Logging Analytics as target. With this update, the following targets are supported: Object Storage, Streaming, Functions and Logging Analytics.
+
+## <a name="2-5-2-cis-level">CIS Level Setting Updates</a>
+Following updates were made regarding the CIS Level setting (*cis_level* variable):
+- Setting *cis_level* variable to "2" is enough for OCI Vault creation. Previously, the OCI Vault creation would also require a bucket and no provided existing vault.
+- Write logs for buckets are only created if *cis_level* variable is set to "2". Previously, bucket write logs were not impacted by CIS Level setting.
+
+
+#  December 16, 2022 Release Notes - 2.5.1
+1. [CIS Compliance Script fixes](#2-5-1-script-update)
+1. [Improved Terraform Windows Support](#2-5-1-terraform-windows)
+
+## <a name="2-5-1-script-update">CIS Compliance Script fixes</a>
+The CIS Compliance Checking script [.cis_reports.py](./scripts/cis_reports.py) has had the following fixes:
+- Fixed consolidated xlsx file generation on Windows command line and Powershell.
+- Converted from positional arguments in OCI API calls to named arguments.
+
+## <a name="2-5-1-terraform-windows">Improved Terraform Windows Support</a>
+Fixed support for deploying terraform via Windows. Closes [Issue](https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/issues/61).
+
 #  December 05, 2022 Release Notes - 2.5.0
 1. [OCI Best Practices Checks Added to CIS Compliance Script](#2-5-0-script-update)
 1. [Cloud Guard Improvements](#2-5-0-cloud-guard-improvements)
