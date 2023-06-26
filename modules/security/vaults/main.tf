@@ -22,5 +22,4 @@ resource "oci_kms_vault" "this" {
   defined_tags   = var.defined_tags
   freeform_tags  = var.freeform_tags
 
-  count = 0
 }
