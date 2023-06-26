@@ -36,6 +36,10 @@ variable "policy_name" {
   default     = "lz-keys-policy"
 } 
 
+variable "region_key" {
+  type        = string
+}
+
 variable "policy_compartment_id" {
   type        = string
   description = "The compartment OCID where the managed_keys policies are managed."

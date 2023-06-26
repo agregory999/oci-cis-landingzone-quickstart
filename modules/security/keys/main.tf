@@ -86,7 +86,7 @@ resource "oci_identity_policy" "managed_keys" {
 resource "oci_identity_policy" "existing_keys" {
   provider = oci.home
   for_each = var.existing_keys
-    name           = "${each.key}-policy"
+    name           = "${each.key}-${var.region_key}-policy"
     description    = "CIS Landing Zone policy allowing access to keys in the Vault service."
     compartment_id = each.value.compartment_id
     statements     = concat(

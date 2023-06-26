@@ -52,6 +52,7 @@ module "lz_keys" {
   existing_keys         = local.existing_appdev_bucket_key
   defined_tags          = local.keys_defined_tags
   freeform_tags         = local.keys_freeform_tags
+  region_key            = local.region_key
 }
 
 #----------------------------------------------------------------------------
