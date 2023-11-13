@@ -66,10 +66,10 @@ module "lz_tags" {
   tags                         = length(local.all_tags) > 0 ? local.all_tags : local.default_tags
 }
 
-module "lz_arch_center_tag" {
-  count = !var.extend_landing_zone_to_new_region ? 1 : 0
-  source        = "../modules/monitoring/tags-arch-center"
-  providers     = { oci = oci.home }
-  tenancy_ocid  = local.tag_namespace_compartment_id
-  service_label = var.service_label
-}
+# module "lz_arch_center_tag" {
+#   count = !var.extend_landing_zone_to_new_region ? 1 : 0
+#   source        = "../modules/monitoring/tags-arch-center"
+#   providers     = { oci = oci.home }
+#   tenancy_ocid  = local.tag_namespace_compartment_id
+#   service_label = var.service_label
+# }
