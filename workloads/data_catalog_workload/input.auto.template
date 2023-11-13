@@ -1,0 +1,27 @@
+# Copyright (c) 2023 Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+##### The uncommented variable assignments below are for REQUIRED variables that do NOT have a default value in variables.tf. They must be provided appropriate values.
+##### The commented variable assignments are for variables with a default value in variables.tf. For overriding them, uncomment the variable and provide an appropriate value.
+
+# ------------------------------------------------------
+# ----- Terraform Environment
+# ------------------------------------------------------
+tenancy_ocid         = "ocid1.tenancy.oc1..aaaaaaaackopa27emaz4uteg4sseutmk3qq73iyoymttpyjdu34bilvxo3da"
+user_ocid            = "ocid1.user.oc1..aaaaaaaaov6iqmzkdjikuk43jki56hxqvqoufvvx7srebexfwrifquntywfq"
+fingerprint          = "5b:0a:43:58:38:3c:47:e7:77:e9:9e:4b:78:46:cb:54"
+private_key_path     = "~/.oci/oci_api_key.pem"
+private_key_password = ""
+region               = "us-ashburn-1"
+
+# ------------------------------------------------------
+# ----- Workload Variables
+# ------------------------------------------------------
+service_label                          = "CISLZ"
+existing_lz_enclosing_compartment_ocid = "ocid1.compartment.oc1..aaaaaaaac3keyh7nwulvdnszokm52kvkmvlinesfjf56xqcv2xbbefxtdwuq"
+existing_lz_security_compartment_ocid  = "ocid1.compartment.oc1..aaaaaaaajkpxpobznnqksz64x72lvfnififtvozwmth33hlufkpxyjqaecza"
+existing_lz_network_compartment_ocid   = "ocid1.compartment.oc1..aaaaaaaabamzmag2g3oq2zusvafjcltugf4tzvhuujqu3qxrkfbt5l5o3kpa"
+existing_lz_appdev_compartment_ocid    = "ocid1.compartment.oc1..aaaaaaaal2cp4odc75qw4avz55gif5lred5cvwlfd6mc7b4zsq3negcethca"
+workload_names                         = ["data-platform"]
+create_workload_groups_and_policies    = true
+create_workload_dynamic_groups_and_policies = true
