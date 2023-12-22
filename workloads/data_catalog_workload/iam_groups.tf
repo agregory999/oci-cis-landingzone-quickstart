@@ -5,6 +5,9 @@ locals {
   custom_groups_defined_tags  = null
   custom_groups_freeform_tags = null
 
+  workload_group_prefix = var.service_label
+  workload_group_suffix = "workload-group"
+
   #------------------------------------------------------------------------------------------------------
   #-- These variables are not meant to be overriden
   #------------------------------------------------------------------------------------------------------
@@ -29,10 +32,9 @@ locals {
       defined_tags  = local.groups_defined_tags,
       freeform_tags = local.groups_freeform_tags
       }
-
     }
-
   }
+
 
   empty_groups_configuration = {
     groups : {}

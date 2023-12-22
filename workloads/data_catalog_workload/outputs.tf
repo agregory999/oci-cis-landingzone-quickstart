@@ -4,3 +4,11 @@
 output "compartments" {
   value = module.workload_compartments.compartments
 }
+
+output "groups" {
+  value = module.workload_groups.groups[local.]
+}
+
+output "policies" {
+  value = module.lz_template_policies.policies
+}

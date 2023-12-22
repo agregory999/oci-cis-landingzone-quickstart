@@ -21,55 +21,16 @@ variable "region" {
   }
 }
 
-#-------------------------------------------------------------
-#-- Arbitrary compartments topology
-#-------------------------------------------------------------
-# variable "compartments" {
-#   description = "The compartments structure, given as a map of objects nested up to 6 levels."
-#   type = map(object({
-#     name          = string
-#     description   = string
-#     parent_id     = string
-#     defined_tags  = map(string)
-#     freeform_tags = map(string)
-#     children = map(object({
-#       name          = string
-#       description   = string
-#       defined_tags  = map(string)
-#       freeform_tags = map(string)
-#       children = map(object({
-#         name          = string
-#         description   = string
-#         defined_tags  = map(string)
-#         freeform_tags = map(string)
-#         children = map(object({
-#           name          = string
-#           description   = string
-#           defined_tags  = map(string)
-#           freeform_tags = map(string)
-#           children = map(object({
-#             name          = string
-#             description   = string
-#             defined_tags  = map(string)
-#             freeform_tags = map(string)
-#             children = map(object({
-#               name          = string
-#               description   = string
-#               defined_tags  = map(string)
-#               freeform_tags = map(string)
-#             }))
-#           }))
-#         }))
-#       }))
-#     }))
-#   }))
-#   default = {}
-# }
-
 variable "service_label" {
   description = "Prefix used in your CIS Landing Zone deployment."
   type        = string
   default     = ""
+}
+
+variable "workload_name" {
+  description = "Name of this Data Platform workload."
+  type        = string
+  default     = "data-platform"
 }
 
 variable "existing_lz_enclosing_compartment_ocid" {
@@ -90,16 +51,34 @@ variable "existing_lz_network_compartment_ocid" {
   default     = ""
 }
 
-variable "existing_lz_appdev_compartment_ocid" {
-  description = "Existing CIS Landing Zone Appdev Compartment where new compartments will be created"
+variable "existing_lz_database_compartment_ocid" {
+  description = "Existing CIS Landing Zone Database Compartment"
   type        = string
+  default     = ""
 }
 
+# Workload Specfics
+variable "create_data_catalog" {
+  description = "Whether to create Data Catalog Resources."
+  type        = bool
+  default     = false
+}
 
-variable "workload_names" {
-  description = "List of workload names, each workload will get a compartment created in the AppDev Compartment. The names must be unique within the AppDev compartment."
-  type        = list
-  
+variable "create_data_flow" {
+  description = "Whether to create Data Catalog Resources."
+  type        = bool
+  default     = false
+}
+
+variable "create_data_integration" {
+  description = "Whether to create Data Catalog Resources."
+  type        = bool
+  default     = false
+}
+variable "create_data_lake" {
+  description = "Whether to create Data Catalog Resources."
+  type        = bool
+  default     = false
 }
 
 variable "create_workload_groups_and_policies" {

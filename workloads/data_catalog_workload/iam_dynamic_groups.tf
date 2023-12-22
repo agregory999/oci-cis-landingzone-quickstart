@@ -18,7 +18,9 @@ locals {
   #------------------------------------------------------------------------------------------------------
   #-- These variables are not meant to be overriden
   #------------------------------------------------------------------------------------------------------
-  appdev_dynamic_group_key = "key"
+  appdev_dynamic_group_key       = "key"
+  data_dynamic_group_name_prefix = var.service_label
+  data_dynamic_group_name_suffix = "data-platform-dg"
 
   #-----------------------------------------------------------
   #----- Tags to apply to dynamic groups
@@ -30,27 +32,56 @@ locals {
   dynamic_groups_freeform_tags = local.custom_dynamic_groups_freeform_tags != null ? merge(local.custom_dynamic_groups_freeform_tags, local.default_dynamic_groups_freeform_tags) : local.default_dynamic_groups_freeform_tags
 
   #--------------------------------------------------------------------
-  #-- Data Platform functions Dynamic Group
+  #-- AppDev functions Dynamic Group
   #--------------------------------------------------------------------
 
-  data_platform_dynamic_group = var.create_workload_dynamic_groups_and_policies ? { for key,cmp in local.workload_compartments : ("${key}-${local.appdev_dynamic_group_key}") => {
+  # data_dc_dynamic_group = var.create_workload_dynamic_groups_and_policies ? {
 
-    name          = "${local.data_dynamic_group_name_prefix}-${cmp.workload_name}-${local.data_dynamic_group_name_suffix}"
-    description   = "Dynamic group for Data Platform for workload ${cmp.workload_name}."
-    # matching_rule = "ALL {resource.type = 'fnfunc'"
-    matching_rule = "ALL {resource.compartment.id = '${module.workload_compartments.compartments[key].id}'}"
-    defined_tags  = local.dynamic_groups_defined_tags
-    freeform_tags = local.dynamic_groups_freeform_tags
+  #   name          = "${local.data_dynamic_group_name_prefix}-${var.workload_name}-${local.data_dynamic_group_name_suffix}"
+  #   description   = "Dynamic group 1 for application functions execution for workload ${var.workload_name}."
+  #   # matching_rule = "ALL {resource.type = 'fnfunc'"
+  #   matching_rule = "ALL {resource.compartment.id = '${module.workload_compartments.compartments[0].id}'}"
+  #   defined_tags  = local.dynamic_groups_defined_tags
+  #   freeform_tags = local.dynamic_groups_freeform_tags
+  #   } : {}
+
+  # data_dc2_dynamic_group = var.create_workload_dynamic_groups_and_policies ? {
+
+  #   name          = "${local.data_dynamic_group_name_prefix}-${var.workload_name}-${local.data_dynamic_group_name_suffix}"
+  #   description   = "Dynamic group 2 for application functions execution for workload ${var.workload_name}."
+  #   # matching_rule = "ALL {resource.type = 'fnfunc'"
+  #   matching_rule = "ALL {resource.compartment.id = '${module.workload_compartments.compartments[0].id}'}"
+  #   defined_tags  = local.dynamic_groups_defined_tags
+  #   freeform_tags = local.dynamic_groups_freeform_tags
+  #   } : {}
+
+  data_platform_dynamic_group = var.create_workload_dynamic_groups_and_policies ? { for key, cmp in local.workload_compartments : ("${key}-${local.appdev_dynamic_group_key}") =>
+    {
+      name        = "${local.data_dynamic_group_name_prefix}-${cmp.workload_name}-${local.data_dynamic_group_name_suffix}"
+      description = "Dynamic group for Data Platform for workload ${cmp.workload_name}."
+      # matching_rule = "ALL {resource.type = 'fnfunc'"
+      matching_rule = "ALL {resource.compartment.id = '${module.workload_compartments.compartments[key].id}'}"
+      defined_tags  = local.dynamic_groups_defined_tags
+      freeform_tags = local.dynamic_groups_freeform_tags
     }
   } : {}
 
+  data_platform_dc_dynamic_group = var.create_workload_dynamic_groups_and_policies ? { for key, cmp in local.workload_compartments : ("${key}-${local.appdev_dynamic_group_key}") =>
+    {
+      name        = "${local.data_dynamic_group_name_prefix}-${cmp.workload_name}-${local.data_dynamic_group_name_suffix}"
+      description = "Dynamic group for Data Platform for workload ${cmp.workload_name}."
+      # matching_rule = "ALL {resource.type = 'fnfunc'"
+      matching_rule = "ALL {resource.compartment.id = '${module.workload_compartments.compartments[key].id}'}"
+      defined_tags  = local.dynamic_groups_defined_tags
+      freeform_tags = local.dynamic_groups_freeform_tags
+    }
+  } : {}
 
   #------------------------------------------------------------------------
   #----- Dynamic groups configuration definition. Input to module.
   #------------------------------------------------------------------------
   dynamic_groups_configuration = {
-    dynamic_groups : local.data_platform_dynamic_group,
-
+    dynamic_groups : local.data_platform_dynamic_group
   }
 
   empty_dynamic_groups_configuration = {
