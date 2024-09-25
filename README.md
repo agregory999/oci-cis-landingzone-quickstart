@@ -1,6 +1,31 @@
-[![Deploy_To_OCI](images/DeployToOCI.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/archive/refs/heads/main.zip)
+[![Deploy_To_OCI](images/DeployToOCI.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/archive/refs/heads/main.zip)<br>
+*If you are logged into your OCI tenancy in the Commercial Realm (OC1), the button will take you directly to OCI Resource Manager where you can proceed to deploy. If you are not logged, the button takes you to Oracle Cloud initial page where you must enter your tenancy name and login to OCI.*
+<br>
+<details><summary>To deploy to non-commercial realms and regions click here</summary>
 
-*If you are logged into your OCI tenancy, the button will take you directly to OCI Resource Manager where you can proceed to deploy. If you are not logged, the button takes you to Oracle Cloud initial page where you must enter your tenancy name and login to OCI.*
+**OC2 Realm**
+- [ Deploy to us-langley-1](https://console.us-langley-1.oraclegovcloud.com/resourcemanager/stacks/create?zipUrl=https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/archive/refs/heads/main.zip)
+- [Deploy to us-luke-1](https://console.us-luke-1.oraclegovcloud.com/resourcemanager/stacks/create?zipUrl=https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/archive/refs/heads/main.zip)
+
+
+**OC3 Realm**
+- [Deploy to us-gov-ashburn-1](https://console.us-gov-ashburn-1.oraclegovcloud.com/resourcemanager/stacks/create?zipUrl=https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/archive/refs/heads/main.zip)
+- [Deploy to us-gov-chicago-1](https://console.us-gov-chicago-1.oraclegovcloud.com/resourcemanager/stacks/create?zipUrl=https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/archive/refs/heads/main.zip)
+- [Deploy to us-gov-phoenix-1](https://console.us-gov-phoenix-1.oraclegovcloud.com/resourcemanager/stacks/create?zipUrl=https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/archive/refs/heads/main.zip)
+
+**OC4 Realm**
+- [Deploy to uk-gov-london-1](https://console.uk-gov-london-1.oraclegovcloud.uk/resourcemanager/stacks/create?zipUrl=https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/archive/refs/heads/main.zip)
+- [Deploy to uk-gov-cardiff-1](https://console.uk-gov-cardiff-1.oraclegovcloud.uk/resourcemanager/stacks/create?zipUrl=https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/archive/refs/heads/main.zip)
+
+**OC10 Realm**
+- [Deploy to ap-dcc-canberra-1](https://oc10.cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/archive/refs/heads/main.zip)
+
+**OC19 Realm**
+- [Deploy to eu-frankfurt-2](https://cloud.oracle.eu/resourcemanager/stacks/create?zipUrl=https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/archive/refs/heads/main.zip&region=eu-frankfurt-2)
+
+- [Deploy to eu-madrid-2](https://cloud.oracle.eu/resourcemanager/stacks/create?zipUrl=https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/archive/refs/heads/main.zip&region=eu-madrid-2)
+
+</details>
 <br>
 <br>
 <img align="left" src="./images/the_o.png" height="30" width="30">&nbsp;&nbsp;Check [CIS Landing Zone course](https://mylearn.oracle.com/ou/course/oci-landing-zone/123962/193003) in Oracle University for a comprehensive introduction.
@@ -9,6 +34,7 @@
 <img align="left" src="./images/livelab.png" height="30" width="30">&nbsp;&nbsp;Also check our [Live Lab](https://apexapps.oracle.com/pls/apex/r/dbpm/livelabs/view-workshop?wid=3662) for key use cases and hands on deployment experience.
 <br>
 <br>
+
 # CIS OCI Landing Zone Quick Start Template
 ![Landing_Zone_Logo](images/landing%20zone_300.png)
 ## Table of Contents
@@ -135,8 +161,25 @@ The modules in this collection are designed for flexibility, are straightforward
 Using these modules does not require a user extensive knowledge of Terraform or OCI resource types usage. Users declare a JSON object describing the OCI resources according to each module’s specification and minimal Terraform code to invoke the modules. The modules generate outputs that can be consumed by other modules as inputs, allowing for the creation of independently managed operational stacks to automate your entire OCI infrastructure.
 
 
-## <a name="feedback"></a>Feedback
-We welcome your feedback. To post feedback, submit feature ideas or report bugs, please use the Issues section on this repository.	
+## Help
+
+Open an issue in this repository.
+
+## Contributing
+
+This project welcomes contributions from the community. Before submitting a pull request, please [review our contribution guide](./CONTRIBUTING.md).
+
+## Security
+
+Please consult the [security guide](./SECURITY.md) for our responsible security vulnerability disclosure process.
+
+## License
+
+Copyright (c) 2020,2024 Oracle and/or its affiliates.
+
+Released under the Universal Permissive License v1.0 as shown at
+<https://oss.oracle.com/licenses/upl/>.
+
 
 ## <a name="known-issues"></a>Known Issues
 * **Terraform Apply Failure 404-NotAuthorizedorNotFound**    

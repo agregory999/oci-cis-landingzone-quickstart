@@ -1,3 +1,154 @@
+#  July 26, 2024 Release Notes - 2.8.4
+1. [CIS OCI Benchmark Logging and Monitoring Workload](#2-8-4-cis-workload)
+1. [SIEM (Security information and event management) Workload](#2-8-4-siem-workload)
+1. [Updates/Fixes to the CIS Compliance Script](#2-8-4-script-updates)
+1. [Documentation Updates](#2-8-4-general-updates)
+
+## <a name="#2-8-4-cis-workload">CIS OCI Benchmark Logging and Monitoring Workload</a>
+The CIS OCI Benchmark Logging and Monitoring Workload adds the following to an existing OCI tenancy:
+- Logging Monitoring and Alerting Events and Notifications as recommended by the CIS OCI Foundation Benchmark
+- Enables Cloud Guard as recommended by the CIS OCI Foundations Benchmark
+- Enables Budgets for Cloud Governance
+
+## <a name="#2-8-4-siem-workload">SIEM (Security information and event management) Workload</a>
+The workload can be used to partially set up SIEM integration from the OCI side for integration with SIEMs like Stellar Cyber, Splunk, or SIEMs that read from OCI Streams.
+
+## <a name="#2-8-4-script-updates">Updates/Fixes to the CIS Compliance Script</a>
+**Fixes**
+- Fixed issue on 4.15, “Ensure a notification is configured for Oracle Cloud Guard problems detect” check, which defaulted to True
+
+**Updates**
+- Updated CIS recommendation 4.3 - 4.12 to ensure event notifications are created in all OCI subscribed regions.
+
+## <a name="#2-8-4-general-updates">Documentation Updates</a>
+- Logo Updated.
+- Updated README.md, CONTRIBUTING.md, and LICENSE.txt files.
+- Added SECURITY.md file.
+
+#  June 7, 2024 Release Notes - 2.8.3
+1. [Cloud Guard Detector and Security Zones Rules Mapped to CIS OCI Benchmark 2.0.0](#2-8-3-mapping-updates)
+1. [Updates/Fixes to the CIS Compliance Script](#2-8-3-script-updates)
+1. [Updates/Fixes to the Terraform](#2-8-3-terraform-updates)
+
+
+## <a name="#2-8-3-mapping-updates">Cloud Guard Detector and Security Zones Rules Mapped to CIS OCI Benchmark 2.0.0</a>
+The CIS OCI Benchmark mapping in the [compliance-script.md](./compliance-script.md) now maps to Cloud Guard Detectors and Security Zone Rules.
+
+## <a name="#2-8-3-script-updates">Updates/Fixes to the CIS Compliance Script</a>
+**Fixes**
+- Fixed numbering issue for Logging and Monitoring checks 4.3 - 4.12.
+- Fixed to Auditor policy documented in the [compliance-script.md](./compliance-script.md) to support running OBP checks.
+- Fixed language for observations and error messages.
+
+**Updates**
+- Reduced code associated with ADB collection function.
+- Added additional debugging statements.
+
+## <a name="#2-8-3-terraform-updates">Updates/Fixes to the Terraform</a>
+**Updates**
+- Updated to Auditor policy to align with the [compliance-script.md](./compliance-script.md) update.
+- Updated Network and Database Admins with permissions to include repo management.
+
+#  April 18, 2024 Release Notes - 2.8.2
+1. [New OBP for Certificate Service Certificate Expiration](#2-8-2-certificate-check)
+1. [OCI CIS Landing Zone Oracle Access Governance Support](#2-8-2-oag-support)
+1. [Updates/Fixes to the Terraform](#2-8-2-terraform-updates)
+1. [Updates/Fixes to the CIS Compliance Script](#2-8-2-script-updates)
+
+## <a name="#2-8-2-certificate-check">New OBP for Certificate Service Certificate Expiration</a>
+A new Oracle Best Practice (OBP) check scans certificates stored in the [OCI Certificate Service](https://docs.oracle.com/en-us/iaas/Content/certificates/overview.htm) and finds those that will expire in under 30 days.  This check will help customers prevent unintended outages for OCI Services using certificates stored in the certificate service that expires before causing connectivity errors.
+
+## <a name="#2-8-2-oag-support">OCI CIS Landing Zone Oracle Access Governance Support</a>
+The OCI CIS Landing Zone enables accelerated [Oracle Access Governance (OAG)](https://www.oracle.com/security/cloud-security/access-governance/) deployment.  The policies and groups required for OAG are created and aligned with the OCI CIS Foundations Benchmark.  To deploy OAG using the CIS Landing Zone, review the Oracle Access Governance section under Governance in the [Deployment Guide](./DEPLOYMENT-GUIDE.md).
+
+## <a name="#2-8-2-terraform-updates">Updates/Fixes to the Terraform</a>
+**Fixes**
+- Fixed the issue when deploying the CIS Landing Zone to other [realms](https://docs.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm). [Issue 140](https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/issues/140)
+
+## <a name="#2-8-2-script-updates">Updates/Fixes to the CIS Compliance Script</a>
+**Updates**
+- Added support to override `https://cloud.oracle.com` in deep link URLs in CSV reports with a customer provided deep link URL using the `--deeplink-url-override` argument.  This provides support for other [realms](https://docs.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm).  The following `--deeplink-url-override https://console.us-langley-1.oraclegovcloud.com` will support OC2's Ashburn region.
+- Added new actions attribute to OCI Event records.
+- Added new compliance checking script FAQ item. 
+
+#  March 25, 2024 Release Notes - 2.8.1
+1. [Updates/Fixes to the CIS Compliance Script](#2-8-1-script-updates)
+
+## <a name="#2-8-1-script-updates">Updates/Fixes to the CIS Compliance Script</a>
+**Updates:**
+- Added flag `--report-prefix` to allow unique files for better baseline comparison.
+- Improved performance in querying Identity Domains users’ API keys.
+- Improved Identity Domains checking for federated users by using is_federated flag.
+- Added Deep Link with Identity Domain name to user, group, and dynamic group records.
+- The audit configuration check has been removed because it is no longer in the benchmark.
+- Boot Volume resources were added to the check 6.2 resources in the root compartment.
+
+**Fixes:**
+-	Handling KMS keys with date issues.
+-	Removed duplication of Identity Groups for Identity Domains.
+-	Consistency and commenting updates.
+
+
+#  February 23, 2024 Release Notes - 2.8.0
+1. [Updates for CIS OCI Benchmark 2.0.0](#2-8-0-cis-2-updates)
+1. [Compliance Checker Script Update for Identity Domains](#2-8-0-cis-2-iddomains)
+1. [Updates/Fixes to the CIS Compliance Script](#2-8-0-script-updates)
+1. [Readme Updates](#2-8-0-readme-updates)
+
+
+## <a name="#2-8-0-cis-2-updates">Updates for CIS OCI Benchmark 2.0.0</a>
+On January 4th, 2024 the [CIS Oracle Cloud Infrastructure Foundations Benchmark 2.0.0](https://www.cisecurity.org/benchmark/oracle_cloud) was published.  To align to this new release the compliance checking script has updated the numbering and added the following new checks:
+- Compute checks for secure boot, IMDSv2, and in-transit encryption enabled
+- Logging and Monitoring Check added to ensure there is a notification for Cloud Guard events
+- IAM check for Database Password rotation
+In addition, the CIS OCI Benchmark to CIS Landing Zone Architecture Mapping table and architecture where updated to align to the updated benchmark.
+
+## <a name="#2-8-0-cis-2-iddomains">Compliance Checker Script Update for Identity Domains</a>
+To align with the migration from OCI tenancies to those without Identity Domains to those with Identity Domains.  All IAM checks have been updated to search all Identity Domains in a tenancy.  Checks that were updated are:
+- 1.4   Ensure IAM password policy requires minimum length of 14 or greater
+- 1.5   Ensure IAM password policy expires passwords within 365 days
+- 1.6	Ensure IAM password policy prevents password reuse
+- 1.7   Ensure MFA is enabled for all users with a console password
+- 1.8   Ensure user API keys rotate within 90 days or less
+- 1.9   Ensure user customer secret keys rotate within 90 days or less
+- 1.10  Ensure user auth tokens rotate within 90 days or less
+- 1.11  Ensure user IAM Database Passwords rotate within 90 days
+- 1.12  Ensure API keys are not created for tenancy administrator users
+- 1.13  Ensure all OCI IAM user accounts have a valid and current email address
+- 1.14  Ensure Instance Principal authentication is used for OCI instances, OCI Cloud Databases and OCI Functions to access OCI resources.
+
+## <a name="#2-8-0-script-updates">Updates/Fixes to the CIS Compliance Script</a>
+**Fixes:**
+    - Check *Ensure customer created Customer Managed Key (CMK) is rotated at least annually.* was updated to check current key version instead of key creation date.
+    - Updated checks 1.6, 1.5, 6.2 totals to prevent negative numbers.
+    - Resolved case sensitivity issue relating to policy check for `"PSM-root-policy"`.
+**Updates:**
+    - Added a new item to the FAQ.
+
+## <a name="#2-8-0-readme-updates">Readme Updates</a>
+The README.md was updated to add a click to deploy option for the EU Sovereign regions. Closing [issue 136](https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/issues/136)
+
+#   January 5, 2024 Release Notes - 2.7.1
+1. [Links to Deploy in Non-commercial Regions](#2-7-1-deploy-links)
+1. [Terraform Updates](#2-7-1-tf-updates)
+1. [Script Updates](#2-7-1-script-updates)
+
+## <a name="#2-7-1-deploy-links">Links to Deploy in Non-commercial Regions</a>
+Links have been added to [README.md](./README.md) allowing the initiation of Terraform deployments in **non-commercial** regions through OCI Resource Manager service. The existing "Deploy to Oracle Cloud" button is unchanged, initiating deployments to commercial regions only. Use the links when deploying to Gov cloud.
+
+## <a name="2-7-1-tf-updates">Terraform Updates</a>
+**config module**
+* *tenancy_ocid*, *user_ocid* and *region* variables are now hidden in [generic_workload_compartments](./workloads/generic_workload_compartments/) RMS UI.
+* IAM policies have been added to allow OKE clusters deployment with NPN (Native Pod Networking) and split compartment topology (i.e., networking in Network compartment and cluster in AppDev compartment).
+* Tenancy wide audit logs for Service Connector Hub are now collected using "_Audit_Include_Subcompartment" construct instead of explicitly looping through all tenancy compartments. 
+
+**pre-config module**
+* Auditor grants in pre-config module aligned with auditor grants in config module.
+
+## <a name="2-7-1-script-updates">Script Updates</a>
+- Fixes:
+    - Added additional error handling in `__search_resources_in_root_compartment` to resolve [issue 134](https://github.com/oracle-quickstart/oci-cis-landingzone-quickstart/issues/134).
+
 #   November 17, 2023 Release Notes - 2.7.0
 1. [CIS Compliance Script Gets Network Topology](#2-7-0-script-network-topology)
 1. [CIS Compliance Script Gets All Resources](#2-7-0-script-all-resources)
